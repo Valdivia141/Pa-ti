@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Eres Bella</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      background: #000;
+      overflow: hidden;
+      font-family: 'Press Start 2P', cursive;
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 0;
+    }
+
+    .center-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) perspective(600px) rotateX(20deg);
+      font-size: 24px;
+      color: #ff00ff;
+      border: 4px solid #ff00ff;
+      padding: 30px 50px;
+      text-align: center;
+      box-shadow:
+        0 0 5px #ff00ff,
+        0 0 10px #ff00ff,
+        0 0 20px #ff00ff,
+        0 0 40px #ff00ff;
+      text-shadow:
+        0 0 2px #ff00ff,
+        0 0 5px #ff00ff,
+        0 0 10px #ff00ff;
+      background-color: rgba(0, 0, 0, 0.6);
+      z-index: 2;
+      letter-spacing: 2px;
+    }
+
+    .falling {
+      position: absolute;
+      color: #ff66ff;
+      font-size: 12px;
+      animation: fall linear infinite;
+      white-space: nowrap;
+      text-shadow: 0 0 3px #ff00ff;
+      z-index: 1;
+    }
+
+    .emoji {
+      font-size: 16px;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(-10vh);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(110vh);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="stars"></canvas>
+  <div class="center-text">ERES BELLA</div>
+
+  <script>
+    // Fondo de estrellas tipo píxel
+    const canvas = document.getElementById("stars");
+    const ctx = canvas.getContext("2d");
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      drawStars();
+    }
+
+    function drawStars() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let i = 0; i < 400; i++) {
+        const x = Math.random() * canvas.width;
+        const y = Math.random() * canvas.height;
+        const brightness = Math.random() * 255;
+        ctx.fillStyle = `rgb(${brightness}, ${brightness}, ${brightness})`;
+        ctx.fillRect(x, y, 1, 1); // estrella tipo píxel
+      }
+    }
+
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
+
+    // Frases y emojis que caen
+    const frases = [
+      "Mi amor", "Eres única", "Mi inspiración", "Lo más bello", "Te amo", "Mi cielo",
+      "Perfecta", "Mi razón", "Bonita", "Te extraño", "Eres arte", "Eres luz", "Mi vida",
+      "Mi universo", "Te pienso", "Mi princesa", "Mi reina", "Eres magia", "Mi todo"
+    ];
+
+    const emojis = ["❤️", "💖", "🥰", "🌟", "💕", "💘"];
+
+    function crearElemento(texto, esEmoji = false) {
+      const span = document.createElement("span");
+      span.classList.add("falling");
+      if (esEmoji) span.classList.add("emoji");
+      span.textContent = texto;
+      span.style.left = Math.random() * window.innerWidth + "px";
+      span.style.top = -Math.random() * 50 + "px";
+      span.style.animationDuration = (4 + Math.random() * 8) + "s";
+      span.style.fontSize = (esEmoji ? 16 : 10 + Math.random() * 6) + "px";
+      document.body.appendChild(span);
+
+      // Eliminar después de que desaparezca
+      setTimeout(() => span.remove(), 12000);
+    }
+
+    setInterval(() => {
+  const esEmoji = Math.random() < 0.5; // ahora 50% emojis
+  const randomText = esEmoji
+    ? emojis[Math.floor(Math.random() * emojis.length)]
+    : frases[Math.floor(Math.random() * frases.length)];
+  crearElemento(randomText, esEmoji);
+}, 120); // cae más rápido
+
+  </script>
+
+<audio autoplay loop>
+  <source src="Trueno - SOLO POR VOS (Video Oficial).mp3" type="audio/mpeg">
+  Tu navegador no soporta el elemento de audio.
+</audio>
+
+
+</body>
+</html>
+
