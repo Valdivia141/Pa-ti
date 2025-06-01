@@ -57,16 +57,6 @@
       font-size: 16px;
     }
 
-    audio {
-      position: fixed;
-      bottom: 10px;
-      right: 10px;
-      z-index: 3;
-      outline: none;
-      background: rgba(0,0,0,0.5);
-      border-radius: 8px;
-    }
-
     @keyframes fall {
       0% {
         transform: translateY(-10vh);
@@ -85,11 +75,6 @@
 <body>
   <canvas id="stars"></canvas>
   <div class="center-text">ERES BELLA</div>
-
-  <audio autoplay loop controls>
-    <source src="Trueno - SOLO POR VOS (Video Oficial)" type="audio/mpeg">
-    Tu navegador no soporta audio HTML5.
-  </audio>
 
   <script>
     // Fondo de estrellas tipo píxel
@@ -141,13 +126,21 @@
     }
 
     setInterval(() => {
-      const esEmoji = Math.random() < 0.5; // ahora 50% emojis
-      const randomText = esEmoji
-        ? emojis[Math.floor(Math.random() * emojis.length)]
-        : frases[Math.floor(Math.random() * frases.length)];
-      crearElemento(randomText, esEmoji);
-    }, 120);
+  const esEmoji = Math.random() < 0.5; // ahora 50% emojis
+  const randomText = esEmoji
+    ? emojis[Math.floor(Math.random() * emojis.length)]
+    : frases[Math.floor(Math.random() * frases.length)];
+  crearElemento(randomText, esEmoji);
+}, 120); // cae más rápido
+
   </script>
+
+<audio autoplay loop>
+  <source src="Trueno - SOLO POR VOS (Video Oficial).mp3" type="audio/mpeg">
+  Tu navegador no soporta el elemento de audio.
+</audio>
+
+
 </body>
 </html>
 
